@@ -1,14 +1,16 @@
-export default function Todo({ todo, selected, selectThisTodo }) {
+export default function Todo({ todo, dispatch, selectThisTodo }) {
   return (
     <div
-      className={`todoItem ${selected && "selected"}`}
+      className={`todoItem ${todo.selected && "selected"} ${
+        todo.completed && "completed"
+      }`}
       onClick={() => selectThisTodo(todo)}
     >
       <input
         type="checkbox"
         value=""
-        defaultChecked={todo.completed === 1 ? true : false}
-        /* onChange={() => } */
+        defaultChecked={todo.completed ? true : false}
+        onChange={() => dispatch({ type: "toggle_completed", payload: todo })}
       />
       <div>{todo.title}</div>
     </div>

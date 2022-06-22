@@ -3,17 +3,15 @@ import { useState, useReducer, useEffect } from "react";
 import Todo from "./components/Todo";
 
 const addNewTodo = (payload) => {
-  console.log(Date.now());
   return {
     id: Date.now(),
     title: payload.todoTitle,
     day: payload.todoDay,
-    completed: 0,
+    completed: false,
   };
 };
 
 const reducer = (todos, action) => {
-  console.log(todos, action.type, action.payload);
   switch (action.type) {
     case "add_new":
       return [...todos, addNewTodo(action.payload)];
@@ -21,7 +19,24 @@ const reducer = (todos, action) => {
     case "delete":
       return todos.filter((todo) => todo.id !== action.payload.id);
       break;
-
+    case "change_day":
+      return todos.map((todo) => {
+        if (todo.id === action.payload.selected.id) {
+          return { ...todo, day: action.payload.day };
+        } else {
+          return todo;
+        }
+      });
+      break;
+    case "toggle_completed":
+      return todos.map((todo) => {
+        if (todo.id === action.payload.id) {
+          return { ...todo, completed: !todo.completed };
+        } else {
+          return todo;
+        }
+      });
+      break;
     default:
       return todos;
   }
@@ -60,6 +75,10 @@ const App = () => {
   const deleteSelectedTodo = (todo) => {
     setSelected({});
     dispatch({ type: "delete", payload: selected });
+  };
+  const modifyDay = (day) => {
+    setSelected({});
+    dispatch({ type: "change_day", payload: { selected, day } });
   };
 
   return (
@@ -122,11 +141,12 @@ const App = () => {
               <div className="todoList">
                 {todos.map((todo) => {
                   if (todo.day === "Today") {
+                    todo.selected = todo.id === selected.id;
                     return (
                       <Todo
                         key={todo.id}
                         todo={todo}
-                        selected={todo.id === selected.id}
+                        dispatch={dispatch}
                         selectThisTodo={selectThisTodo}
                       />
                     );
@@ -143,6 +163,12 @@ const App = () => {
                 selected.day === "Today" ? "active" : "inactive"
               }`}
             >
+              <img
+                className="icon28 imgReverse"
+                alt="Arrow right"
+                src={`/template/arrow-left-circle-fill.svg`}
+                onClick={() => modifyDay("Tomorrow")}
+              />
               Tomorrow
             </div>
             <div
@@ -150,13 +176,22 @@ const App = () => {
                 selected.day === "Tomorrow" ? "active" : "inactive"
               }`}
             >
-              today
+              <img
+                className="icon28"
+                alt="Arrow left"
+                src={`/template/arrow-left-circle-fill.svg`}
+                onClick={() => modifyDay("Today")}
+              />
+              Today
             </div>
-            <div
-              className={`icon ${selected.id ? "active" : "inactive"}`}
-              onClick={deleteSelectedTodo}
-            >
-              delete
+            <div className={`icon ${selected.id ? "active" : "inactive"}`}>
+              <img
+                className="icon28"
+                alt="Delete"
+                src={`/template/trash-fill.svg`}
+                onClick={deleteSelectedTodo}
+              />
+              Delete
             </div>
           </div>
           <div className="tomorrow">
@@ -165,11 +200,12 @@ const App = () => {
               <div className="todoList">
                 {todos.map((todo) => {
                   if (todo.day === "Tomorrow") {
+                    todo.selected = todo.id === selected.id;
                     return (
                       <Todo
                         key={todo.id}
                         todo={todo}
-                        selected={todo.id === selected.id}
+                        dispatch={dispatch}
                         selectThisTodo={selectThisTodo}
                       />
                     );
@@ -182,7 +218,6 @@ const App = () => {
           </div>
         </div>
       </div>
-      selected: {selected.title}
     </div>
   );
 };

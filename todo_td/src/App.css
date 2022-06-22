@@ -8,6 +8,7 @@
   border-radius: 10px;
   border: 1px solid #555;
   overflow: hidden;
+  margin: 0 0 40px;
 }
 
 h3 {
@@ -49,7 +50,7 @@ input {
 .todoBlock {
   display: grid;
   grid-template-columns: 6fr 1fr 6fr;
-  grid-gap: 20px;
+  grid-gap: 30px;
 }
 .todoListBlock {
   border: 1px solid #111;
@@ -67,9 +68,43 @@ input {
 }
 
 .inactive {
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .selected {
   background: #d1e1ff;
+}
+.completed {
+  color: #777;
+}
+
+.modifyBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  padding: 20px 0;
+}
+
+.icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon28 {
+  height: 28px;
+  width: 28px;
+  cursor: pointer;
+}
+.icon28:hover {
+  fill: #eee;
+}
+
+.imgReverse {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
