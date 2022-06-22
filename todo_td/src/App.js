@@ -40,6 +40,7 @@ const reducer = (todos, action) => {
     default:
       return todos;
   }
+  // we should return here to avoid "Unreachable code" message
 };
 
 const App = () => {
@@ -164,7 +165,7 @@ const App = () => {
               }`}
             >
               <img
-                className="icon28 imgReverse"
+                className="icon28 tomorrowIcon imgReverse"
                 alt="Arrow right"
                 src={`/template/arrow-left-circle-fill.svg`}
                 onClick={() => modifyDay("Tomorrow")}
@@ -177,7 +178,7 @@ const App = () => {
               }`}
             >
               <img
-                className="icon28"
+                className="icon28 todayIcon"
                 alt="Arrow left"
                 src={`/template/arrow-left-circle-fill.svg`}
                 onClick={() => modifyDay("Today")}

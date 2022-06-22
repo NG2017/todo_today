@@ -1,7 +1,7 @@
 .wrapper {
   max-width: 700px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 20px 10px;
 }
 
 .formBlock {
@@ -101,10 +101,36 @@ input {
   fill: #eee;
 }
 
-.imgReverse {
+.tomorrowIcon {
   -webkit-transform: rotate(180deg);
   -moz-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   -o-transform: rotate(180deg);
   transform: rotate(180deg);
+}
+
+@media only screen and (max-width: 768px) {
+  form,
+  .todoBlock {
+    grid-template-columns: 1fr;
+  }
+  .modifyBlock {
+    flex-flow: row wrap;
+    justify-content: space-around;
+    padding: 0;
+  }
+  .todayIcon {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+  .tomorrowIcon {
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    transform: rotate(270deg);
+  }
 }
